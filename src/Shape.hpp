@@ -8,11 +8,12 @@ namespace TheGame{
 
     class Shape{
         public:
-            Shape(int id, std::vector<int> color, int xPos, int yPos, int zPos, int height, int width, int velocity);
-            void setCoords(int x, int y);
+            Shape(int id, int height, int width);
+            void setCoords(int x, int y, bool anchored=false);
             void setGrabbed(bool grabbed);
-            void setAnchor(uint8_t x, uint8_t y);
+            void setAnchor(int x, int y);
             void setColor(std::vector<int> color);
+            void setVelocity(int velocity);
             int id;
             int height;
             int width;
@@ -28,6 +29,11 @@ namespace TheGame{
         private:
             int _anchorX;
             int _anchorY;
+    };
+
+    class Circle: public Shape{
+        public:
+            Circle(int id, int height, int width);
     };
 };
 

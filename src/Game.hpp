@@ -29,6 +29,7 @@ namespace TheGame{
             void handleMouseMotion(Sint32 x, Sint32 y);
             std::string concat(std::vector<std::vector<int>>);
             std::list<int> activeShapes;
+            std::list<std::vector<int>> coords;
 
         private:
             const char* _title;

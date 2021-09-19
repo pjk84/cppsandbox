@@ -8,11 +8,24 @@
 
 using namespace TheGame;
 
-Shape::Shape(int id, std::vector<int> color, int xPos, int yPos, int zPos, int height, int width, int velocity)
-: id{id}, height{height}, width{width}, xPos(xPos), yPos(yPos), zPos(zPos), color{color}, velocity(velocity)
+Shape::Shape(int id, int height, int width)
+: id{id}, height{height}, width{width}
 {}
 
-void Shape::setCoords(int x, int y){
+Circle::Circle(int id, int height, int width)
+: Shape(id, height, width)
+{}
+
+void Shape::setCoords(int x, int y, bool anchored){
+    if(anchored){
+        // tracks cursor, maintaining relative position
+        xPos += (x - _anchorX);
+        yPos += (y - _anchorY);
+        _anchorX = x;
+        _anchorY = y;
+        return;
+    }
+    // simple positioning centered on top left corner
     xPos = x;
     yPos = y;
 }
@@ -26,7 +39,8 @@ void Shape::setColor(std::vector<int> newColor){
     color = newColor;
 }
 
-void Shape::setAnchor(uint8_t x, uint8_t y){
+void Shape::setAnchor(int x, int y){
     _anchorX = x;
     _anchorY = y;
 }
+

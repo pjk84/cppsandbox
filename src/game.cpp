@@ -51,10 +51,13 @@ void Game::renderShape(const Shape& s){
     r.w = s.width;
     SDL_SetRenderDrawColor(renderer, s.color[0], s.color[1], s.color[2], s.color[3]);
     SDL_RenderFillRect(renderer, &r);
+    // SDL_SetRenderDrawColor(renderer, 255, 0, 0, 1);
+    // SDL_RenderDrawPoint(renderer, 10, 10);
 }
 
 void Game::render(){
     renderBackground();
+    if(_shapes.size() == 0)return; // nothing to render
     for(auto const &shape: _shapes){
         renderShape(shape);
     }
@@ -82,7 +85,9 @@ void Game::handleEvents(){
 }
 
 void Game::handleMouseMotion(Sint32 x, Sint32 y){
-    std::cout << std::to_string(x) << std::endl;
+    for(auto &id: activeShapes){
+        _shapes[id].setCoords(x, y, true);
+    }
 }
 
 void Game::handleMouseInput(uint8_t buttonIndex){
@@ -118,6 +123,7 @@ void Game::releaseAllShapes(){
 }
 
 void Game::update(){
+    
     if(_shapes.size() == 0){
         makeShape();
     }
@@ -130,8 +136,12 @@ void Game::update(){
 }
 
 void Game::makeShape(){
-    Shape s(0, {0, 0, 0, 0}, 0, 50, 0, 100, 100, 5);
-    _shapes.push_back(s);
+    Shape s(0, 50, 50);
+    // s.setColor({0, 0, 0, 0});
+    Circle c(0, 10, 10);
+    c.setColor({0, 0, 0, 0});
+    c.setCoords(50, 50);
+    _shapes.push_back(c);
 }
 
 void Game::clean(){
